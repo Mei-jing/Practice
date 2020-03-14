@@ -7,7 +7,8 @@ function byId(id){
 // 全局变量
 var index = 0;
     timer = null;
-    pics = byId("banner").getElementsByTagName("div")
+    pics = byId("banner").getElementsByTagName("div"); // Elements
+    dots = byId("dots").getElementsByTagName("div"); 
     len = pics.length;
 
 function slideImg(){
@@ -29,6 +30,15 @@ function slideImg(){
     } 
 
     main.onmouseout();  //调用 onmouseout 方法    自动在 main 上触发鼠标离开事件
+
+
+    // 点击圆点切换图片
+    // 遍历所有圆点，且绑定点击事件，
+    for(var i=0;i<len;i++){
+        dots[i].onclick = function(){
+            alert("hello")
+        }
+    }
 }
 
 
