@@ -4,18 +4,26 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
-		"autoAudits": false,
 		"coverView": true,
+		"autoAudits": false,
 		"showShadowRootInWxmlPanel": true,
-		"scopeDataCheck": false
+		"scopeDataCheck": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		}
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.10.2",
+	"libVersion": "2.10.3",
 	"appid": "wx4a805bdd385e9800",
 	"projectname": "ReaderMovie",
 	"debugOptions": {
