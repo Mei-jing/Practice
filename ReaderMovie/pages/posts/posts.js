@@ -18,8 +18,16 @@ Page({
 
     // this.data.postList = postsData.postList
     this.setData({
-      post_key: postsData.postList
+      postList: postsData.postList
     });
+  },
+
+  onPostTap:function(event){
+    var postId=event.currentTarget.dataset.postid
+    console.log("on postId is " + postId)
+    wx.navigateTo({
+      url: './post-detail/post-detail',
+    })
   },
 
   /**
