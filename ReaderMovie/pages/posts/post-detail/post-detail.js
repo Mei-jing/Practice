@@ -20,34 +20,88 @@ Page({
       postData: postsData.postList[postId] // 此处 postsData 是对象，postsData 下面的 postlist 才是数组，详见 posts-data.js 文件；
     });
 
-  //初始化
-    var postCollected = wx.getStorageSync('posts_collected')
-    if(postsCollected){
+    //初始化
+    var postsCollected = wx.getStorageSync('posts_collected') // 变量名一定要注意
+    if (postsCollected) {
       var postCollected = postsCollected[postId]
       this.setData({
-        collected:postCollected  // 收藏状态绑定
+        collected: postCollected // 收藏状态绑定
       })
-    }else{
+    } else {
       var postsCollected = {};
       postsCollected[postId] = false;
       wx.setStorageSync('posts_collected', postsCollected)
     }
 
-   
+
   },
 
-  onCollectionTap:function(event){
-    var postsCollected= wx.getStorageSync('posts_collected');
+  onCollectionTap: function(event) {
+    var postsCollected = wx.getStorageSync('posts_collected');
     var postCollected = postsCollected[this.data.currentPostId];
     postCollected = !postCollected; // 取反，收藏变成未收藏，未收藏变成收藏
     postsCollected[this.data.currentPostId] = postCollected;
+    this.showToast(postsCollected, postCollected)
     // 更新缓存
     wx.setStorageSync("posts_collected", postsCollected)
     // 更新数据绑定,从而实现图片切换
     this.setData({
-      collected:postCollected
+      collected: postCollected
+    })
+
+    // wx.showToast({
+    //   title: postCollected ? "收藏成功" : "取消成功",
+    //   icon: "loading"
+    // })
+    // wx.showModal({
+    //   title: "收藏",
+    //   content: "是否收藏改文章",
+    //   showcancel: "true",
+    //   cancleText: "不收藏",
+    //   cancelColor: "#333",
+    //   confimText: "收藏",
+    //   confirmColor: "#405f80",
+    // })
+  },
+
+  showModal: function(postsCollected, postCollected) { //自定义函数  //传参否则未定义
+    var that = this; // this 的意义取决于上下文环境
+    wx.showModal({
+      title: "收藏",
+      content: postCollected ? "收藏改文章" : "取消收藏该文章",
+      showcancel: "true",
+      cancleText: "取消",
+      cancelColor: "#445f81",
+      confimText: "确认",
+      confirmColor: "#445f81",
+      success: function(res) {
+        if (res.confirm) {
+          // 更新缓存
+          wx.setStorageSync("posts_collected", postsCollected)
+          // 更新数据绑定,从而实现图片切换
+          that.setData({
+            collected: postCollected
+          })
+        }
+
+      }
     })
   },
+
+  showToast: function(postsCollected, postCollected) {
+    // 更新缓存
+    wx.setStorageSync("posts_collected", postsCollected)
+    // 更新数据绑定,从而实现图片切换
+    this.setData({
+      collected: postCollected
+    })
+    wx.showToast({
+      title: postCollected ? "收藏成功" : "取消成功",
+      icon: "loading"
+    })
+  },
+
+
 
 
 
