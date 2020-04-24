@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    isPlayingMusic: false
   },
 
   /**
@@ -101,6 +101,46 @@ Page({
     })
   },
 
+  onShareTap: function(event) {
+    var itemList = [
+      "分享给微信好友",
+      "分享到朋友圈",
+      "分享到 QQ",
+      "分享到微博",
+    ];
+    wx.showActionSheet({
+      itemList: itemList,
+      itemColor: "#405f80",
+      success: function(res) {
+        // res.cancle 用户是不是点击了取消按钮；
+        // res.tapIndex 数组元素的序号，从 0 开始；
+        wx.showModal({
+          title: itemList[res.tapIndex],
+          content: "点击确定分享",
+        })
+      }
+    })
+  },
+
+  onMusicTap: function(enent) {
+    var currentPostId = this.data.currentPostId;
+    var isPlayingMusic = this.data.isPlayingMusic;
+    if (isPlayingMusic) {
+      wx.pauseBackgroundAudio();
+      this.setData({
+        isPlayingMusic: false
+      })
+    } else {
+      wx.playBackgroundAudio({
+        dataUrl: postsData.postList[currentPostId].music.url,
+        title: postsData.postList[currentPostId].music.title,
+        coverImgUrl: postsData.postList[currentPostId].music.coverImg,
+      })
+      this.setData({
+        isPlayingMusic: true
+      })
+    }
+  },
 
 
 
